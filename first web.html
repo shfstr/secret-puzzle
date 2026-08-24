@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secret Keyboard Cipher</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#111;
+    color:white;
+    padding:20px;
+}
+
+textarea,input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#222;
+    color:white;
+    box-sizing:border-box;
+}
+
+button{
+    padding:12px 20px;
+    margin-top:10px;
+    margin-right:5px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#00aa88;
+    color:white;
+    font-weight:bold;
+}
+
+#output{
+    margin-top:20px;
+    padding:15px;
+    background:#222;
+    border-radius:10px;
+    white-space:pre-wrap;
+}
+
+a{
+    color:#00ccaa;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔐 Secret Keyboard Cipher</h1>
+
+<textarea
+    id="input"
+    rows="5"
+    placeholder="Masukkan teks..."
+></textarea>
+
+<input
+    type="text"
+    id="number"
+    placeholder="Nomor WA contoh: 08123456789"
+>
+
+<br>
+
+<button onclick="encode()">Encode</button>
+<button onclick="decode()">Decode</button>
+<button onclick="sendWA()">Kirim ke WhatsApp</button>
+
+<div id="output"></div>
+
+
+<script>
+
+// ======================================
+// SECRET CODE 30 DIGIT
+// ======================================
+
+const secretCode = "739184026517493820641758302916";
+
+// GANTI DENGAN LINK HALAMAN KEDUA
+const secretLink = "second-web.html";
+
+// ======================================
+// CIPHER A → B → C → ... → Z → A
+// ======================================
+
+function translate(text, reverse = false){
+
+    let result = "";
+
+    for(let char of text){
+
+        let code = char.charCodeAt(0);
+
+        // Huruf kecil
+        if(char >= "a" && char <= "z"){
+
+            if(reverse){
+                code = ((code - 97 - 1 + 26) % 26) + 97;
+            }else{
+                code = ((code - 97 + 1) % 26) + 97;
+            }
+
+        }
+
+        // Huruf besar
+        else if(char >= "A" && char <= "Z"){
+
+            if(reverse){
+                code = ((code - 65 - 1 + 26) % 26) + 65;
+            }else{
+                code = ((code - 65 + 1) % 26) + 65;
+            }
+
+        }
+
+        // Selain huruf → jangan diubah
+        else{
+            result += char;
+            continue;
+        }
+
+        result += String.fromCharCode(code);
+    }
+
+    return result;
+}
+
+
+// ======================================
+// ENCODE
+// ======================================
+
+function encode(){
+
+    let text =
+        document.getElementById("input").value;
+
+    document.getElementById("output").innerText =
+        translate(text, false);
+}
+
+
+// ======================================
+// DECODE
+// ======================================
+
+function decode(){
+
+    let text =
+        document.getElementById("input").value.trim();
+
+    // ==============================
+    // CEK SECRET 30 DIGIT
+    // ==============================
+
+    if(/^\d{30}$/.test(text)){
+
+        if(text === secretCode){
+
+            document.getElementById("output").innerHTML =
+
+                `🔓 Secret code accepted!<br><br>
+
+                <a href="${secretLink}" target="_blank">
+                👉 Continue
+                </a>`;
+
+        }else{
+
+            document.getElementById("output").innerText =
+                "❌ Secret code salah bro 🗿";
+
+        }
+
+        return;
+    }
+
+
+    // ==============================
+    // DECODE NORMAL
+    // ==============================
+
+    document.getElementById("output").innerText =
+        translate(text, true);
+}
+
+
+// ======================================
+// WHATSAPP
+// ======================================
+
+function sendWA(){
+
+    let number =
+        document.getElementById("number").value.trim();
+
+    let text =
+        document.getElementById("output").innerText;
+
+    if(!text){
+
+        alert("Encode/decode dulu bro 🗿");
+
+        return;
+    }
+
+    let url =
+        `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+
+    window.open(url, "_blank");
+}
+
+</script>
+
+</body>
+</html>
