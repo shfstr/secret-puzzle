@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Page</title>
+
+<style>
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#111;
+    color:white;
+    font-family:Arial;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.box{
+    width:100%;
+    max-width:500px;
+    background:#222;
+    padding:30px;
+    border-radius:18px;
+    text-align:center;
+    box-sizing:border-box;
+}
+
+h1{
+    margin-top:0;
+}
+
+p{
+    color:#ccc;
+    line-height:1.6;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin-top:15px;
+    box-sizing:border-box;
+    border:none;
+    border-radius:10px;
+    background:#111;
+    color:white;
+    font-size:16px;
+    text-align:center;
+}
+
+button{
+    margin-top:12px;
+    padding:13px 22px;
+    border:none;
+    border-radius:10px;
+    background:#00aa88;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
+}
+
+#error{
+    margin-top:15px;
+    color:#ff7777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🎉 Selamat!</h1>
+
+<p>
+Anda telah menemukan halaman web ini.
+</p>
+
+<p>
+Masukkan <b>key selanjutnya</b> untuk melanjutkan.
+</p>
+
+<input
+    type="text"
+    id="key"
+    placeholder="Masukkan key..."
+    autocomplete="off"
+>
+
+<button onclick="checkKey()">
+🔓 Unlock
+</button>
+
+<div id="error"></div>
+
+</div>
+
+<script>
+
+const correctKey = "130726200826";
+
+const finalLink = "third%20web.html";
+
+function checkKey(){
+
+    const key =
+        document.getElementById("key").value.trim();
+
+    if(key === correctKey){
+
+        window.location.href = finalLink;
+
+    }else{
+
+        document.getElementById("error").innerText =
+            "❌ Key tidak valid.";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
